@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NexusFlow — Smart Supply Chain Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-logo">
+      <span class="logo-mark">NX</span>
+      <span class="logo-text">NexusFlow</span>
+    </div>
+    <div class="nav-links">
+      <a href="#dashboard">Dashboard</a>
+      <a href="#disruptions">Disruptions</a>
+      <a href="#routes">Routes</a>
+      <a href="#analytics">Analytics</a>
+    </div>
+    <div class="nav-status">
+      <span class="pulse-dot"></span>
+      <span>Live Monitoring</span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-bg">
+      <canvas id="networkCanvas"></canvas>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        AI-Powered Logistics Intelligence
+      </div>
+      <h1 class="hero-title">
+        Resilient Logistics<br/>
+        <span class="title-accent">Before Disruptions Strike</span>
+      </h1>
+      <p class="hero-sub">
+        Continuously analyzing millions of concurrent shipments across volatile transportation networks. Preemptive detection. Dynamic rerouting. Zero cascades.
+      </p>
+      <div class="hero-cta">
+        <a href="#dashboard" class="btn-primary">View Live Dashboard</a>
+        <a href="#how" class="btn-ghost">How It Works ↓</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-pill">
+        <span class="stat-num" data-target="2.4">0</span><span>M+</span>
+        <span class="stat-label">Shipments Monitored</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-num" data-target="94">0</span><span>%</span>
+        <span class="stat-label">Disruptions Predicted</span>
+      </div>
+      <div class="stat-pill">
+        <span class="stat-num" data-target="18">0</span><span>min</span>
+        <span class="stat-label">Avg. Early Warning</span>
+      </div>
+    </div>
+    <div class="scroll-hint">scroll to explore ↓</div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div class="section-tag">// System Architecture</div>
+    <h2 class="section-title">How NexusFlow Works</h2>
+    <div class="how-grid">
+      <div class="how-card" data-step="01">
+        <div class="how-icon">⚡</div>
+        <h3>Ingest &amp; Stream</h3>
+        <p>Real-time ingestion of GPS telemetry, weather APIs, port congestion feeds, carrier EDI, and IoT sensor data at 50,000+ events/second.</p>
+      </div>
+      <div class="how-card" data-step="02">
+        <div class="how-icon">🧠</div>
+        <h3>AI Risk Scoring</h3>
+        <p>Multi-model ensemble scores every shipment leg continuously — detecting bottleneck signatures, delay probability, and cascade risk before they materialize.</p>
+      </div>
+      <div class="how-card" data-step="03">
+        <div class="how-icon">🔀</div>
+        <h3>Dynamic Rerouting</h3>
+        <p>Graph-optimization engine instantly computes alternate routes factoring cost, time, carrier availability, and SLA constraints — executing or recommending in under 200ms.</p>
+      </div>
+      <div class="how-card" data-step="04">
+        <div class="how-icon">📡</div>
+        <h3>Stakeholder Alerts</h3>
+        <p>Push notifications, ERP integrations, and API webhooks keep every stakeholder — warehouse, carrier, customer — synchronized in real-time.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVE DASHBOARD -->
+  <section class="dashboard" id="dashboard">
+    <div class="section-tag">// Live Operations Center</div>
+    <h2 class="section-title">Global Shipment Dashboard</h2>
+
+    <div class="dashboard-top">
+      <div class="kpi-bar">
+        <div class="kpi-card kpi-green">
+          <div class="kpi-label">On-Time Deliveries</div>
+          <div class="kpi-val">87,241</div>
+          <div class="kpi-delta up">↑ 3.2% vs yesterday</div>
+        </div>
+        <div class="kpi-card kpi-amber">
+          <div class="kpi-label">At-Risk Shipments</div>
+          <div class="kpi-val" id="riskCount">1,048</div>
+          <div class="kpi-delta warn">⚠ Actively Monitored</div>
+        </div>
+        <div class="kpi-card kpi-red">
+          <div class="kpi-label">Critical Disruptions</div>
+          <div class="kpi-val" id="critCount">23</div>
+          <div class="kpi-delta down">Rerouting in Progress</div>
+        </div>
+        <div class="kpi-card kpi-blue">
+          <div class="kpi-label">Routes Optimized Today</div>
+          <div class="kpi-val">4,387</div>
+          <div class="kpi-delta up">↑ Saved 612 hrs</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-main">
+      <!-- World Map Panel -->
+      <div class="map-panel">
+        <div class="panel-header">
+          <span class="panel-title">Global Route Map</span>
+          <div class="map-legend">
+            <span class="legend-dot green"></span>On-Time
+            <span class="legend-dot amber"></span>At-Risk
+            <span class="legend-dot red"></span>Disrupted
+          </div>
+        </div>
+        <div class="map-container">
+          <svg class="world-map" viewBox="0 0 900 450" xmlns="http://www.w3.org/2000/svg">
+            <!-- Simplified World Map paths -->
+            <rect width="900" height="450" fill="none"/>
+            <!-- Grid lines -->
+            <g class="map-grid" stroke="rgba(255,255,255,0.06)" stroke-width="0.5">
+              <line x1="0" y1="75" x2="900" y2="75"/>
+              <line x1="0" y1="150" x2="900" y2="150"/>
+              <line x1="0" y1="225" x2="900" y2="225"/>
+              <line x1="0" y1="300" x2="900" y2="300"/>
+              <line x1="0" y1="375" x2="900" y2="375"/>
+              <line x1="150" y1="0" x2="150" y2="450"/>
+              <line x1="300" y1="0" x2="300" y2="450"/>
+              <line x1="450" y1="0" x2="450" y2="450"/>
+              <line x1="600" y1="0" x2="600" y2="450"/>
+              <line x1="750" y1="0" x2="750" y2="450"/>
+            </g>
+            <!-- Continents (simplified blobs) -->
+            <!-- North America -->
+            <path d="M80,60 L190,50 L210,80 L220,130 L200,170 L170,190 L140,180 L110,160 L80,140 L60,100 Z" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+            <!-- South America -->
+            <path d="M160,200 L200,195 L215,230 L210,280 L190,310 L165,300 L155,270 L145,240 Z" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+            <!-- Europe -->
+            <path d="M380,55 L440,50 L460,70 L450,100 L430,110 L400,105 L375,85 Z" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+            <!-- Africa -->
+            <path d="M390,120 L440,115 L460,150 L455,210 L430,250 L400,245 L375,210 L370,165 Z" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+            <!-- Asia -->
+            <path d="M480,45 L640,40 L680,70 L700,110 L680,150 L640,160 L580,155 L530,140 L490,110 L470,80 Z" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+            <!-- Southeast Asia + Oceania -->
+            <path d="M640,165 L680,160 L700,185 L680,200 L650,195 Z" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+            <path d="M700,220 L760,215 L790,240 L780,270 L740,275 L710,255 Z" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+
+            <!-- Animated shipping routes -->
+            <g class="routes">
+              <!-- Trans-Pacific: LA → Shanghai -->
+              <path class="route-path route-green" d="M170,145 Q350,100 640,110" fill="none" stroke="#00ff88" stroke-width="1.2" stroke-dasharray="6,4" opacity="0.6"/>
+              <!-- Trans-Atlantic: NY → London -->
+              <path class="route-path route-green" d="M175,120 Q280,80 410,70" fill="none" stroke="#00ff88" stroke-width="1.2" stroke-dasharray="6,4" opacity="0.6"/>
+              <!-- Europe → Asia -->
+              <path class="route-path route-amber" d="M430,80 Q520,60 640,80" fill="none" stroke="#ffaa00" stroke-width="1.4" stroke-dasharray="6,4" opacity="0.8"/>
+              <!-- South America → Europe -->
+              <path class="route-path route-green" d="M175,240 Q280,180 400,100" fill="none" stroke="#00ff88" stroke-width="1.2" stroke-dasharray="6,4" opacity="0.5"/>
+              <!-- Africa → Asia (disrupted) -->
+              <path class="route-path route-red" d="M420,175 Q520,160 600,130" fill="none" stroke="#ff4444" stroke-width="1.6" stroke-dasharray="4,4" opacity="0.9"/>
+              <!-- SE Asia → West Coast -->
+              <path class="route-path route-green" d="M665,175 Q750,130 820,140" fill="none" stroke="#00ff88" stroke-width="1.2" stroke-dasharray="6,4" opacity="0.5"/>
+            </g>
+
+            <!-- City/Hub nodes -->
+            <!-- LA -->
+            <circle cx="155" cy="140" r="5" fill="#00ff88" opacity="0.9"><animate attributeName="r" values="5;8;5" dur="2s" repeatCount="indefinite"/></circle>
+            <text x="162" y="138" fill="#ccc" font-size="8" font-family="Space Mono">Los Angeles</text>
+            <!-- Shanghai -->
+            <circle cx="670" cy="115" r="5" fill="#00ff88" opacity="0.9"><animate attributeName="r" values="5;8;5" dur="2.3s" repeatCount="indefinite"/></circle>
+            <text x="678" y="113" fill="#ccc" font-size="8" font-family="Space Mono">Shanghai</text>
+            <!-- London -->
+            <circle cx="400" cy="70" r="5" fill="#00ff88" opacity="0.9"><animate attributeName="r" values="5;8;5" dur="1.8s" repeatCount="indefinite"/></circle>
+            <text x="408" y="68" fill="#ccc" font-size="8" font-family="Space Mono">London</text>
+            <!-- Singapore (amber) -->
+            <circle cx="640" cy="188" r="5" fill="#ffaa00" opacity="1"><animate attributeName="r" values="5;9;5" dur="1.5s" repeatCount="indefinite"/></circle>
+            <text x="648" y="186" fill="#ffaa00" font-size="8" font-family="Space Mono">Singapore ⚠</text>
+            <!-- Dubai (red) -->
+            <circle cx="510" cy="145" r="6" fill="#ff4444" opacity="1"><animate attributeName="r" values="6;10;6" dur="1.2s" repeatCount="indefinite"/></circle>
+            <text x="518" y="143" fill="#ff4444" font-size="8" font-family="Space Mono">Dubai ✕</text>
+            <!-- New York -->
+            <circle cx="185" cy="110" r="5" fill="#00ff88" opacity="0.9"><animate attributeName="r" values="5;8;5" dur="2.1s" repeatCount="indefinite"/></circle>
+            <text x="193" y="108" fill="#ccc" font-size="8" font-family="Space Mono">New York</text>
+            <!-- Rotterdam -->
+            <circle cx="432" cy="68" r="4" fill="#00ff88" opacity="0.9"></circle>
+            <text x="438" y="66" fill="#ccc" font-size="8" font-family="Space Mono">Rotterdam</text>
+            <!-- Mumbai -->
+            <circle cx="565" cy="160" r="5" fill="#ffaa00" opacity="1"><animate attributeName="r" values="5;8;5" dur="1.9s" repeatCount="indefinite"/></circle>
+            <text x="572" y="158" fill="#ffaa00" font-size="8" font-family="Space Mono">Mumbai ⚠</text>
+
+            <!-- Moving shipment dots -->
+            <circle class="ship-dot" r="3" fill="#00ff88">
+              <animateMotion dur="8s" repeatCount="indefinite" path="M170,145 Q350,100 640,110"/>
+            </circle>
+            <circle class="ship-dot" r="3" fill="#00ff88">
+              <animateMotion dur="6s" repeatCount="indefinite" begin="2s" path="M175,120 Q280,80 410,70"/>
+            </circle>
+            <circle class="ship-dot" r="3" fill="#ffaa00">
+              <animateMotion dur="7s" repeatCount="indefinite" begin="1s" path="M430,80 Q520,60 640,80"/>
+            </circle>
+            <circle class="ship-dot" r="3.5" fill="#ff4444">
+              <animateMotion dur="5s" repeatCount="indefinite" path="M420,175 Q520,160 600,130"/>
+            </circle>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Alerts Feed -->
+      <div class="alerts-panel" id="disruptions">
+        <div class="panel-header">
+          <span class="panel-title">Live Disruption Feed</span>
+          <span class="live-tag">● LIVE</span>
+        </div>
+        <div class="alerts-feed" id="alertsFeed">
+          <!-- JS will populate -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Route Optimization Panel -->
+    <div class="routes-panel" id="routes">
+      <div class="panel-header">
+        <span class="panel-title">Dynamic Route Optimizer</span>
+        <button class="btn-optimize" onclick="triggerOptimization()">⚡ Run Optimization</button>
+      </div>
+      <div class="routes-grid">
+        <div class="route-card active">
+          <div class="route-header">
+            <span class="route-id">SHP-00431</span>
+            <span class="badge badge-red">DISRUPTED</span>
+          </div>
+          <div class="route-detail">
+            <div class="route-from">📍 Dubai Port → 🏭 Frankfurt DC</div>
+            <div class="route-delay">⏱ +14hr delay detected</div>
+          </div>
+          <div class="route-action">
+            <div class="original-route">
+              <span class="route-label">Original:</span> Dubai → Suez → Med → Rotterdam → Frankfurt
+            </div>
+            <div class="new-route">
+              <span class="route-label success">Optimized:</span> Dubai → Muscat → Colombo (Air) → Frankfurt
+              <span class="savings">Saves 9hrs · +$1,200</span>
+            </div>
+          </div>
+          <div class="route-actions">
+            <button class="btn-accept" onclick="acceptRoute(this)">✓ Accept</button>
+            <button class="btn-review">Review</button>
+          </div>
+        </div>
+
+        <div class="route-card">
+          <div class="route-header">
+            <span class="route-id">SHP-01872</span>
+            <span class="badge badge-amber">AT RISK</span>
+          </div>
+          <div class="route-detail">
+            <div class="route-from">📍 Singapore → 🏭 Los Angeles DC</div>
+            <div class="route-delay">⏱ Weather delay likely +6hr</div>
+          </div>
+          <div class="route-action">
+            <div class="original-route">
+              <span class="route-label">Original:</span> Singapore → Pacific → LA
+            </div>
+            <div class="new-route">
+              <span class="route-label success">Suggested:</span> Singapore → Manila → Guam → LA
+              <span class="savings">Saves 4hrs · +$340</span>
+            </div>
+          </div>
+          <div class="route-actions">
+            <button class="btn-accept" onclick="acceptRoute(this)">✓ Accept</button>
+            <button class="btn-review">Review</button>
+          </div>
+        </div>
+
+        <div class="route-card">
+          <div class="route-header">
+            <span class="route-id">SHP-02249</span>
+            <span class="badge badge-amber">AT RISK</span>
+          </div>
+          <div class="route-detail">
+            <div class="route-from">📍 Mumbai → 🏭 London DC</div>
+            <div class="route-delay">⏱ Port congestion +8hr</div>
+          </div>
+          <div class="route-action">
+            <div class="original-route">
+              <span class="route-label">Original:</span> Mumbai → Aden → Suez → Mediterranean → London
+            </div>
+            <div class="new-route">
+              <span class="route-label success">Suggested:</span> Mumbai → Colombo → Cape of Good Hope → London
+              <span class="savings">Saves 5hrs · +$890</span>
+            </div>
+          </div>
+          <div class="route-actions">
+            <button class="btn-accept" onclick="acceptRoute(this)">✓ Accept</button>
+            <button class="btn-review">Review</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANALYTICS -->
+  <section class="analytics" id="analytics">
+    <div class="section-tag">// Predictive Analytics</div>
+    <h2 class="section-title">Supply Chain Intelligence</h2>
+
+    <div class="analytics-grid">
+      <div class="chart-card wide">
+        <div class="chart-title">Disruption Risk Score — Last 30 Days</div>
+        <canvas id="riskChart" height="120"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Disruption Sources</div>
+        <canvas id="sourceChart" height="180"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">AI Prediction Accuracy</div>
+        <div class="accuracy-gauge">
+          <svg viewBox="0 0 200 120" class="gauge-svg">
+            <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="18" stroke-linecap="round"/>
+            <path class="gauge-fill" d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="url(#gaugeGrad)" stroke-width="18" stroke-linecap="round" stroke-dasharray="251" stroke-dashoffset="15"/>
+            <defs>
+              <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#00ff88"/>
+                <stop offset="100%" stop-color="#00d4ff"/>
+              </linearGradient>
+            </defs>
+            <text x="100" y="88" text-anchor="middle" fill="white" font-size="28" font-family="Syne" font-weight="800">94%</text>
+            <text x="100" y="105" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9" font-family="Space Mono">PREDICTION ACCURACY</text>
+          </svg>
+        </div>
+      </div>
+      <div class="insights-card">
+        <div class="chart-title">AI Insights</div>
+        <div class="insights-list" id="insightsList">
+          <!-- JS populated -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="logo-mark">NX</span>
+        <span class="logo-text">NexusFlow</span>
+        <p>Resilient Logistics & Dynamic Supply Chain Optimization</p>
+      </div>
+      <div class="footer-links">
+        <div>
+          <strong>Product</strong>
+          <a href="#">Dashboard</a>
+          <a href="#">Route Optimizer</a>
+          <a href="#">Disruption Engine</a>
+          <a href="#">API Access</a>
+        </div>
+        <div>
+          <strong>Technology</strong>
+          <a href="#">Architecture</a>
+          <a href="#">Data Sources</a>
+          <a href="#">Integrations</a>
+          <a href="#">Security</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 NexusFlow — Smart Supply Chain Intelligence Prototype</span>
+      <span class="mono">Built for GitHub Pages Hosting</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
